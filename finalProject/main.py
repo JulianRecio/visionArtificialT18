@@ -3,7 +3,7 @@ import cv2
 from deepface import DeepFace
 
 # Capturar video y mostrar
-cap = cv2.VideoCapture(1, cv2.CAP_DSHOW)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 # FIja el frame en 640x480
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)

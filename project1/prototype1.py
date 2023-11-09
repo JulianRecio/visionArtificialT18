@@ -8,14 +8,14 @@ def nothing(x):
 cap = cv2.VideoCapture(0)
 
 # Cargar las imágenes de referencia en color y convertirlas a escala de grises
-reference_image1 = cv2.imread("estrella.png")
+reference_image1 = cv2.imread("/Users/tomasrecio/PycharmProjects/visionArtificialT18/project1/resources/estrella.jpg")
 gray_reference1 = cv2.cvtColor(reference_image1, cv2.COLOR_BGR2GRAY)
 _, threshold_reference1 = cv2.threshold(gray_reference1, 100, 255, cv2.THRESH_BINARY)
 contours_reference1, _ = cv2.findContours(threshold_reference1, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 contours_reference1 = sorted(contours_reference1, key=cv2.contourArea, reverse=True)
 reference_contour1 = contours_reference1[0]
 
-reference_image2 = cv2.imread("Circulo.png")
+reference_image2 = cv2.imread("/Users/tomasrecio/PycharmProjects/visionArtificialT18/project1/resources/circulo.jpg")
 gray_reference2 = cv2.cvtColor(reference_image2, cv2.COLOR_BGR2GRAY)
 _, threshold_reference2 = cv2.threshold(gray_reference2, 100, 255, cv2.THRESH_BINARY)
 contours_reference2, _ = cv2.findContours(threshold_reference2, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
