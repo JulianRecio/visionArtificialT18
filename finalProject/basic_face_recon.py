@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 
 # Cargar imagen
 
-imagePath = 'images/JulianRecio.jpg'
+image_path = 'images/JulianRecio.jpg'
 
-img = cv2.imread(imagePath)
+img = cv2.imread(image_path)
 
 # Convertir a graycale
 
