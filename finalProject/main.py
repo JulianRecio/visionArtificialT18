@@ -12,7 +12,7 @@ counter = 0
 #
 face_match = True
 
-reference_img = cv2.imread("JulianRecio.jpg")
+reference_img = cv2.imread("images/JulianRecio.jpg")
 
 def check_face(frame):
     global face_match

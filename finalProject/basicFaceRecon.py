@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 # Cargar imagen
 
-imagePath = 'input_image.jpg'
+imagePath = 'images/JulianRecio.jpg'
 
 img = cv2.imread(imagePath)
 
@@ -12,9 +12,7 @@ img = cv2.imread(imagePath)
 gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 # Cargar el clasificador
-face_classifier = cv2.CascadeClassifier(
-    cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-)
+face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 # Hacer la detteccion de  caras
 face = face_classifier.detectMultiScale(
@@ -34,3 +32,6 @@ plt.figure(figsize=(20, 10))
 plt.imshow(img_rgb)
 plt.axis('off')
 
+cv2.imshow('img', img)
+
+cv2.waitKey(0)
