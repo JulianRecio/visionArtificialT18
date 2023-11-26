@@ -13,7 +13,8 @@ import face_rec_functions
 video_capture = cv2.VideoCapture(0)
 
 # Function to generate embedings and names. Ideally, these should be .txt files or something else
-known_face_encodings, known_face_names = face_rec_functions.generate_face_encodings('images')
+known_face_encodings, known_face_names, attendance = face_rec_functions.read_data_from_txt_files()
+
 while True:
     # Grab a single frame of video
     ret, frame = video_capture.read()
@@ -43,7 +44,6 @@ while True:
         if matches[best_match_index]:
             name = known_face_names[best_match_index]
             color = (0,255,0)
-
 
         # Draw a box around the face
         cv2.rectangle(frame, (left, top), (right, bottom), color, 2)
