@@ -1,6 +1,8 @@
 import cv2
 from real_time_face_recon_functions import detect_bounding_box
 
+# Considerar usar arcface
+
 # Accedemos a la camara
 video_capture = cv2.VideoCapture(0)
 
@@ -23,5 +25,3 @@ while True:
 
 video_capture.release()
 cv2.destroyAllWindows()
-
-

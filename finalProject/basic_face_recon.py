@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 # Cargar imagen
 
-image_path = 'images/JulianRecio.jpg'
+image_path = 'images/Julian_Recio.jpg'
 
 img = cv2.imread(image_path)
 
