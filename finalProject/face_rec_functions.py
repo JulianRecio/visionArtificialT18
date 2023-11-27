@@ -40,19 +40,17 @@ def generate_face_encodings(folder_path):
         booleans.append(False)
 
  # Save the arrays in a .txt file
- with open('finalProject/encodings.txt', 'w') as f:
+ with open('encodings.txt', 'w') as f:
     for encoding in encodings:
         f.write(str(encoding) + '\n')
 
- with open('finalProject/filenames.txt', 'w') as f:
+ with open('filenames.txt', 'w') as f:
     for name in filenames:
         f.write(name + '\n')
 
- with open('finalProject/booleans.txt', 'w') as f:
+ with open('booleans.txt', 'w') as f:
     for boolean in booleans:
         f.write(str(boolean) + '\n')
-
- return encodings, filenames, booleans
 
 
 def split_encodings(encodings):
@@ -87,3 +85,19 @@ def read_data_from_txt_files():
         # Convert the list of encodings to a numpy array
 
     return encodings, filenames, booleans
+
+def find_attendance(best_match_index, attendance):
+    if 0 <= best_match_index < len(attendance):
+        element = attendance[best_match_index]
+    return element
+
+
+def check_in(best_match_index, attendance):
+    attendance[best_match_index] = True
+    return attendance
+
+
+def overwrite_attendancde(attendance):
+    with open('finalProject/booleans.txt', 'w') as f:
+        for boolean in attendance:
+            f.write(str(boolean) + '\n')

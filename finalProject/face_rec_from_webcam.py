@@ -2,25 +2,20 @@ import face_recognition
 import cv2
 import numpy as np
 import face_rec_functions
-# This is a super simple (but slow) example of running face recognition on live video from your webcam.
-# There's a second example that's a little more complicated but runs faster.
-
-# PLEASE NOTE: This example requires OpenCV (the `cv2` library) to be installed only to read from your webcam.
-# OpenCV is *not* required to use the face_recognition library. It's only required if you want to run this
-# specific demo. If you have trouble installing it, try any of the other demos that don't require it instead.
 
 # Get a reference to webcam #0 (the default one)
 video_capture = cv2.VideoCapture(0)
 
-# Function to generate embedings and names. Ideally, these should be .txt files or something else
+# Function to generate embeddings and names. Ideally, these should be .txt files or something else
 known_face_encodings, known_face_names, attendance = face_rec_functions.read_data_from_txt_files()
+
 
 while True:
     # Grab a single frame of video
     ret, frame = video_capture.read()
 
     # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
-    rgb_frame =  cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
     # Find all the faces and face enqcodings in the frame of video
     face_locations = face_recognition.face_locations(rgb_frame)
@@ -41,9 +36,15 @@ while True:
         # Or instead, use the known face with the smallest distance to the new face
         face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
         best_match_index = np.argmin(face_distances)
-        if matches[best_match_index]:
+        attended_event = face_rec_functions.find_attendance(best_match_index, attendance)
+
+        if matches[best_match_index] & attended_event == False:
             name = known_face_names[best_match_index]
             color = (0,255,0)
+
+        if matches[best_match_index] & attended_event == True:
+            name = known_face_names[best_match_index]
+            color = (0,255,255)
 
         # Draw a box around the face
         cv2.rectangle(frame, (left, top), (right, bottom), color, 2)
@@ -53,11 +54,19 @@ while True:
         font = cv2.FONT_HERSHEY_DUPLEX
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
+        if cv2.waitKey(1) & 0xFF == ord('c'):
+            attendance = face_rec_functions.check_in(best_match_index, attendance)
+            cv2.waitKey(-1)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            face_rec_functions.overwrite_attendancde(attendance)
+            break
     # Display the resulting image
     cv2.imshow('Video', frame)
 
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord('q'):
+        face_rec_functions.overwrite_attendancde(attendance)
         break
 
 # Release handle to the webcam
