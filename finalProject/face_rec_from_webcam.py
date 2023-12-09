@@ -24,27 +24,33 @@ while True:
     # Loop through each face in this frame of video
     for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
         # See if the face is a match for the known face(s)
-        matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+        matches = face_recognition.compare_faces(known_face_encodings, face_encoding, 0.6)
 
         name = "Unknown"
         color = (0, 0, 255)
+
         # If a match was found in known_face_encodings, just use the first one.
-        # if True in matches:
-        #     first_match_index = matches.index(True)
-        #     name = known_face_names[first_match_index]
+        if True in matches:
+            first_match_index = matches.index(True)
+            name = known_face_names[first_match_index]
+            attended_event = face_rec_functions.find_attendance(first_match_index, attendance)
+            if attended_event & attended_event == False:
+                color = (0, 255, 0)
+            elif attended_event & attended_event == True:
+                color = (0, 255, 255)
 
         # Or instead, use the known face with the smallest distance to the new face
-        face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
-        best_match_index = np.argmin(face_distances)
-        attended_event = face_rec_functions.find_attendance(best_match_index, attendance)
+        # face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
+        # best_match_index = np.argmin(face_distances)
+        # attended_event = face_rec_functions.find_attendance(best_match_index, attendance)
 
-        if matches[best_match_index] & attended_event == False:
-            name = known_face_names[best_match_index]
-            color = (0,255,0)
+        # if matches[best_match_index] & attended_event == False:
+        #     name = known_face_names[best_match_index]
+        #     color = (0,255,0)
 
-        if matches[best_match_index] & attended_event == True:
-            name = known_face_names[best_match_index]
-            color = (0,255,255)
+        # if matches[best_match_index] & attended_event == True:
+        #     name = known_face_names[best_match_index]
+        #     color = (0,255,255)
 
         # Draw a box around the face
         cv2.rectangle(frame, (left, top), (right, bottom), color, 2)
@@ -55,7 +61,7 @@ while True:
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
         if cv2.waitKey(1) & 0xFF == ord('c'):
-            attendance = face_rec_functions.check_in(best_match_index, attendance)
+            attendance = face_rec_functions.check_in(first_match_index, attendance)
             cv2.waitKey(-1)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
